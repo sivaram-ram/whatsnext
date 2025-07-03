@@ -1,6 +1,10 @@
 package com.example.whatsNext.service;
 
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,8 +17,14 @@ import java.util.Map;
 @Service
 public class GeminiService {
 
-    private static final String API_KEY = "AIzaSyDOmfL4miM8YQCtWuiPcnqRD7G1JAL7uN0";
-    private static final String GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY;
+
+    public  String apiKey;
+    public String GEMINI_URL;
+
+    public GeminiService(@Value("${api.key}") String apiKey) {
+        this.apiKey = apiKey;
+        this.GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey;
+    }
 
     @Autowired
     private WebClient webClient;
