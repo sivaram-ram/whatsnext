@@ -1,8 +1,10 @@
 package com.example.whatsNext.controller;
 
 import com.example.whatsNext.model.Movie;
+import com.example.whatsNext.model.MovieRequest;
 import com.example.whatsNext.service.ExtractMovies;
 import com.example.whatsNext.service.GeminiService;
+import com.example.whatsNext.service.Prompts;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,13 @@ public class GeminiController {
     Movie movie;
     @Autowired
     ExtractMovies extractMovies;
+    @Autowired
+    Prompts prompts;
 
-
-    @PostMapping("/ask")
-    public ResponseEntity<List<String>> askGemini(@RequestBody List<Movie> movies) throws JsonProcessingException {
-        System.out.println(movies);
-        String prompt = "Based on the following movie: " + movies +
-                ", recommend 5 similar movies that belong to the same genre, appeal to fans of the original, and are lesser-known or underrated. " +
-                "Respond only with a JSON array of movie titles, like this: [movie1,movie2,] — no explanation or extra text.";
+    @PostMapping("/movie")
+    public ResponseEntity<List<String>> askGemini(@RequestBody MovieRequest movieRequest) throws JsonProcessingException {
+        System.out.println(movieRequest);
+        String prompt = prompts.getMovie(movieRequest.getPopularity(),movieRequest.getMovies());
         String response = geminiService.getGeminiResponse(prompt);
         List<String> responseMovies =extractMovies.changeToList(response);
         return ResponseEntity.ok(responseMovies);
