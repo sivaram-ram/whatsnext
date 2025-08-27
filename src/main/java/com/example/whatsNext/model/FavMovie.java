@@ -1,22 +1,22 @@
+
 package com.example.whatsNext.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.*;
 import lombok.NoArgsConstructor;
-
 @Data               // Generates getters, setters, toString, equals, hashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movie {
+public class FavMovie {
     @JsonProperty("Title")
-    private String movieName;
+    private String title;
 
     @JsonProperty("Year")
-    private int year;
+    private String year;
 
-    @JsonProperty("Genre")
-    private String genre;
+    @JsonProperty("imdbID")
+    private String imdbID;
 
-    @JsonProperty("Language")
-    private String language;
+    @JsonProperty("Poster")
+    private String poster;
 }

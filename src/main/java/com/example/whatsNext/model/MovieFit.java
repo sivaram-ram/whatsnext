@@ -1,18 +1,15 @@
 package com.example.whatsNext.model;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.*;
-import lombok.NoArgsConstructor;
 
-@Data               // Generates getters, setters, toString, equals, hashCode
-@NoArgsConstructor
 @AllArgsConstructor
-public class Movie {
+public class MovieFit {
     @JsonProperty("Title")
     private String movieName;
 
     @JsonProperty("Year")
-    private int year;
+    private String year;
 
     @JsonProperty("Genre")
     private String genre;
@@ -20,3 +17,4 @@ public class Movie {
     @JsonProperty("Language")
     private String language;
 }
+
