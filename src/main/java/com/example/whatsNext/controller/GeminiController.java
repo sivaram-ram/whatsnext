@@ -1,8 +1,6 @@
 package com.example.whatsNext.controller;
 
 import com.example.whatsNext.model.GetFullMovie;
-import com.example.whatsNext.model.Movie;
-import com.example.whatsNext.model.MovieRequest;
 import com.example.whatsNext.model.MovieFit;
 import com.example.whatsNext.service.ExtractMovies;
 import com.example.whatsNext.service.GeminiService;
@@ -22,7 +20,6 @@ public class GeminiController {
 
     @Autowired
     private GeminiService geminiService;
-    Movie movie;
     @Autowired
     ExtractMovies extractMovies;
     @Autowired
@@ -32,16 +29,7 @@ public class GeminiController {
     @Autowired
     ExtractAndCallApi extractAndCallApi;
 
-    @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/movie")
-    public ResponseEntity<List<String>> askGemini(@RequestBody MovieRequest movieRequest) throws JsonProcessingException {
-        System.out.println(movieRequest);
-        String prompt = prompts.getMovie(movieRequest.getPopularity(),movieRequest.getMovies());
-        String response = geminiService.getGeminiResponse(prompt);
-        List<String> responseMovies =extractMovies.changeToList(response);
-        return ResponseEntity.ok(responseMovies);
-    }
-
+    
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/moviesearch/{title}")
     public Mono<String> getMovie(@PathVariable String title) {

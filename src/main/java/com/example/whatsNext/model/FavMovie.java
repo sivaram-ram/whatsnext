@@ -17,6 +17,6 @@ public class FavMovie {
     @JsonProperty("imdbID")
     private String imdbID;
 
-    @JsonProperty("Poster")
-    private String poster;
+    //@JsonProperty("Poster")
+    //private String poster;
 }

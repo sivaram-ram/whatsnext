@@ -30,7 +30,7 @@ public class RateLimitFilter extends OncePerRequestFilter{
 
         String path = request.getRequestURI();
 //add endpoints for limiting here
-        if (path.equals("/api/gemini/movie")) {
+        if (path.equals("/api/what/favMovie")) {
             String ip = request.getRemoteAddr();
             Bucket bucket = buckets.computeIfAbsent(ip, k -> createNewBucket());
 
