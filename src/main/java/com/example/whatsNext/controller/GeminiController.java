@@ -29,7 +29,7 @@ public class GeminiController {
     @Autowired
     ExtractAndCallApi extractAndCallApi;
 
-    
+
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/moviesearch/{title}")
     public Mono<String> getMovie(@PathVariable String title) {
@@ -44,7 +44,9 @@ public class GeminiController {
         String prompt = prompts.getMovienew(getFullMovie.getPopularity(),fullMovie);
         String response = geminiService.getGeminiResponse(prompt);
         List<String> responseMovies =extractMovies.changeToList(response);
+        System.out.println(prompt);
         return ResponseEntity.ok(responseMovies);
+
     }
 
 

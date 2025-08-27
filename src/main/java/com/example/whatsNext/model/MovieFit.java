@@ -2,8 +2,10 @@ package com.example.whatsNext.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
+@ToString
 public class MovieFit {
     @JsonProperty("Title")
     private String movieName;
@@ -16,5 +18,6 @@ public class MovieFit {
 
     @JsonProperty("Language")
     private String language;
+
 }
 
