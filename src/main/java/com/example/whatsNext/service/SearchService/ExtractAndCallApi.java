@@ -7,7 +7,6 @@ import com.example.whatsNext.model.MovieFit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ExtractAndCallApi {
 
         List<MovieFit> myList = new ArrayList<>();
         for (FavMovie favmovies:favMovies){
-            MovieFit fit = searchService.getMovieDetails(favmovies.getImdbID()).block();
+            MovieFit fit = searchService.getMovieDetailsById(favmovies.getImdbID()).block();
             if (fit != null) {
                 myList.add(fit);
             }

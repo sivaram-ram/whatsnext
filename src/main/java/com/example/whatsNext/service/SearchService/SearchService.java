@@ -1,6 +1,7 @@
 package com.example.whatsNext.service.SearchService;
 
 import com.example.whatsNext.model.MovieFit;
+import com.example.whatsNext.model.RecmndedMovies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 
 @Service
@@ -33,13 +32,21 @@ public class SearchService {
                 .retrieve()
                 .bodyToMono(String.class);
     }
-    public Mono<MovieFit> getMovieDetails(String imdbID) {
+    public Mono<MovieFit> getMovieDetailsById(String imdbID) {
         String url = OMDB_URL + "&i=" + imdbID;
         return webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(MovieFit.class);
     }
+    public Mono<RecmndedMovies> getMovieDetailsByTitle(String title) {
+        String url = OMDB_URL + "&t=" + title;
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(RecmndedMovies.class);
+    }
+
 
 }
 

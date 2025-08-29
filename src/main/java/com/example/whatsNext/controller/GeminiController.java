@@ -2,9 +2,11 @@ package com.example.whatsNext.controller;
 
 import com.example.whatsNext.model.GetFullMovie;
 import com.example.whatsNext.model.MovieFit;
+import com.example.whatsNext.model.RecmndedMovies;
 import com.example.whatsNext.service.ExtractMovies;
 import com.example.whatsNext.service.GeminiService;
 import com.example.whatsNext.service.Prompts;
+import com.example.whatsNext.service.RecMovieDetails.RecMovieDetails;
 import com.example.whatsNext.service.SearchService.ExtractAndCallApi;
 import com.example.whatsNext.service.SearchService.SearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,7 +30,8 @@ public class GeminiController {
     SearchService searchService;
     @Autowired
     ExtractAndCallApi extractAndCallApi;
-
+    @Autowired
+    RecMovieDetails recMovieDetails;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/moviesearch/{title}")
@@ -38,14 +41,15 @@ public class GeminiController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/favMovie")
-    public ResponseEntity<List<String>> processmovie(@RequestBody GetFullMovie getFullMovie) throws JsonProcessingException {
+    public ResponseEntity<List<RecmndedMovies>> processmovie(@RequestBody GetFullMovie getFullMovie) throws JsonProcessingException {
 
         List<MovieFit> fullMovie =extractAndCallApi.changeToList(getFullMovie.getMovies());
         String prompt = prompts.getMovienew(getFullMovie.getPopularity(),fullMovie);
         String response = geminiService.getGeminiResponse(prompt);
         List<String> responseMovies =extractMovies.changeToList(response);
-        System.out.println(prompt);
-        return ResponseEntity.ok(responseMovies);
+        List<RecmndedMovies> recmndedMovies = recMovieDetails.getDetailsAddToList(responseMovies);
+        System.out.println(recmndedMovies);
+        return ResponseEntity.ok(recmndedMovies);
 
     }
 
